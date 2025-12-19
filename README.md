@@ -26,12 +26,11 @@ The project follows a phased, modular development approach. Core functionality i
 
 **Project Structure**
 
-Expense_Tracker_Python_Project/
+ Expense_Tracker_Python_Project/
 ├── main.py
 ├── README.md
-│
 ├── src/
-│ ├── `__init__.py`
+│ ├── init.py
 │ ├── ingest.py
 │ ├── preprocess.py
 │ ├── config_loader.py
@@ -40,17 +39,14 @@ Expense_Tracker_Python_Project/
 │ ├── analysis.py
 │ ├── scoring.py
 │ └── reporting.py
-│
 ├── data/
 │ └── transactions.csv
-│
 ├── config/
-│ └── budgets.csv
+│ ├── budgets.csv
 │ └── rules.yml
-│
 └── output/
-│ └── reports/
-│ └── audit_logs/  
+├── reports/
+└── audit_logs/  
 
 **Master Task List**
 

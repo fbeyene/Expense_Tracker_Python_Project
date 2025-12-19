@@ -13,14 +13,25 @@ DEFAULT_BUDGETS = {
 
 
 def load_budgets(path="config/budgets.csv"):
+    """
+    Load budget limits by category.
+    Falls back to default budgets if file is missing or invalid.
+    """
     if not os.path.exists(path):
         print("⚠ Budget file not found. Using default budgets.")
         return DEFAULT_BUDGETS
 
     try:
         df = pd.read_csv(path)
+
+        required_cols = {"category", "budget"}
+        if not required_cols.issubset(df.columns):
+            raise ValueError("CSV must contain 'category' and 'budget' columns")
+
         return dict(zip(df["category"], df["budget"]))
+
     except Exception as e:
         print(f"⚠ Error loading budgets: {e}")
+        print("⚠ Using default budgets.")
         return DEFAULT_BUDGETS
 

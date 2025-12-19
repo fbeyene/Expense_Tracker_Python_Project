@@ -1,0 +1,9 @@
+rules:
+  Fuel:
+    keywords: ["fuel", "gas", "petrol"]
+  Food:
+    keywords: ["restaurant", "food", "cafe", "snack"]
+  Maintenance:
+    keywords: ["repair", "garage", "maintenance"]
+  Insurance:
+    keywords: ["insurance"]

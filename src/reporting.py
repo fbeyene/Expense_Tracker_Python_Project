@@ -8,6 +8,9 @@ def generate_summary(total_spend, score):
 
 
 def print_rankings(ranked_costs):
+    """
+    Print ranked cost drivers.
+    """
     print("\nTop Cost Drivers:")
-    for category, amount in ranked_costs.items():
+    for category, amount in ranked_costs:
         print(f"{category}: ${amount:,.2f}")

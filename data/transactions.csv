@@ -19,3 +19,5 @@ date,description,amount
 2025-01-18,Mobile phone bill,85
 2025-01-19,Insurance adjustment,50
 2025-01-20,Fuel gas refill,310
+2025-01-15,Invalid amount,abc
+bad-date,Broken row,xyz

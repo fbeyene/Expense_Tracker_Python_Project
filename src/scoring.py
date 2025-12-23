@@ -1,13 +1,22 @@
-def efficiency_score(total_spend, total_budget):
-    if total_budget == 0:
+def efficiency_score(total_spend: float, total_budget: float) -> int:
+    """
+    Calculate an efficiency score based on spending vs budget.
+
+    Score is capped at 100.
+    A score below 100 means overspending.
+    A score of 100 means on or under budget.
+
+    Args:
+        total_spend (float): Total amount spent
+        total_budget (float): Total budgeted amount
+
+    Returns:
+        int: Efficiency score (0–100)
+    """
+    if total_budget <= 0:
         return 0
 
-    ratio = total_spend / total_budget
+    score = (total_budget / total_spend) * 100
 
-    if ratio <= 1:
-        return 100
-    elif ratio <= 1.2:
-        return 75
-    elif ratio <= 1.5:
-        return 50
-    return 25
+    return min(int(round(score)), 100)
+

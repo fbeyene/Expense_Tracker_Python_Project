@@ -35,48 +35,41 @@ def evaluate_variances(
 
 
 def generate_budget_alerts(
-    variances: Dict[str, float],
-    threshold: float = 0.0
-) -> List[str]:
+    category_totals: Dict[str, float],
+    budgets: Dict[str, float]
+) -> list:
     """
-    Generate budget alerts for overspending categories.
-
-    Parameters
-    ----------
-    variances : dict
-        Category → variance
-    threshold : float
-        Minimum variance to trigger alert
-
-    Returns
-    -------
-    list
-        Human-readable alert messages
+    Generate budget alerts with severity levels.
     """
     alerts = []
 
-    for category, diff in variances.items():
-        if diff > threshold:
+    for category, actual in category_totals.items():
+        budget = budgets.get(category, 0)
+        diff = actual - budget
+
+        if diff > 0:
+            severity = determine_severity(actual, budget)
             alerts.append(
-                f"⚠ {category} is OVER budget by ${diff:.2f}"
+                f"⚠ [{severity}] {category} over budget by ${diff:.2f}"
             )
 
     return alerts
 
 
+
 def log_budget_alerts(
-    variances: dict,
+    category_totals: dict,
+    budgets: dict,
     log_dir: str = "output/audit_logs",
     log_file: str = "budget_alerts.csv"
 ):
     """
-    Log budget overruns to a CSV audit log.
-
-    Parameters
-    ----------
-    variances : dict
-        Category → variance
+    Log budget overruns with severity to a CSV audit log.
     """
+    import csv
+    import os
+    from datetime import datetime
+
     os.makedirs(log_dir, exist_ok=True)
     path = os.path.join(log_dir, log_file)
 
@@ -85,14 +78,36 @@ def log_budget_alerts(
     with open(path, mode="a", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
 
-        # Write header only once
         if not file_exists:
-            writer.writerow(["timestamp", "category", "variance"])
+            writer.writerow(["timestamp", "category", "variance", "severity"])
 
-        for category, diff in variances.items():
+        for category, actual in category_totals.items():
+            budget = budgets.get(category, 0)
+            diff = actual - budget
+
             if diff > 0:
+                severity = determine_severity(actual, budget)
                 writer.writerow([
                     datetime.now().isoformat(),
                     category,
-                    round(diff, 2)
+                    round(diff, 2),
+                    severity
                 ])
+
+
+
+def determine_severity(actual: float, budget: float) -> str:
+    """
+    Determine alert severity based on overspend percentage.
+    """
+    if budget <= 0:
+        return "HIGH"
+
+    overspend_pct = (actual - budget) / budget
+
+    if overspend_pct <= 0.10:
+        return "LOW"
+    elif overspend_pct <= 0.25:
+        return "MEDIUM"
+    else:
+        return "HIGH"

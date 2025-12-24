@@ -37,7 +37,9 @@ def main():
     total_spend, category_totals = calculate_totals(df)# Calculate budget variances
 
     variances = evaluate_variances(category_totals, budgets)
-    alerts = generate_budget_alerts(variances)
+    alerts = generate_budget_alerts(category_totals, budgets)
+
+
 
     print("\n📉 Budget Variance Report")
     print("------------------------")
@@ -46,7 +48,7 @@ def main():
         print(f"{category:<15} ${diff:>8.2f} ({status})")
 
     # Log alerts to audit file
-    log_budget_alerts(variances)
+    log_budget_alerts(category_totals, budgets)
 
     if alerts:
         print("\n🚨 Budget Alerts")

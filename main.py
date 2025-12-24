@@ -7,10 +7,24 @@ from src.reporting import generate_summary, print_rankings
 from src.config_loader import load_budgets
 from src.audit_logger import log_run   # 🔹 STEP 7 import
 
+import os
 
 def main():
+    # -----------------------------
+    # DEBUG: Verify working directory and file existence
+    # -----------------------------
+    print("DEBUG: Current working directory =", os.getcwd())
+    print("DEBUG: Absolute path being used:", os.path.abspath("data/transactions.csv"))
+    print("DEBUG: Does file exist?",
+          os.path.exists("data/transactions.csv"))
+    # -----------------------------
     # Load and process transactions
-    df = load_transactions("data/transactions.csv")
+    df = load_transactions(r"C:\Users\fikad\Documents\Expense_Tracker_Python_Project\data\transactions.csv")
+
+    print("DEBUG: Rows loaded =", len(df))
+    print("DEBUG: Last 10 rows:")
+    print(df.tail(10)) # Show last 10 rows
+
     df = validate_and_clean(df)
     df = auto_categorize(df)
 

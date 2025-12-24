@@ -2,34 +2,39 @@ import pandas as pd
 
 REQUIRED_COLUMNS = {"date", "description", "amount"}
 
-
 def validate_and_clean(df):
     """
-    Validate and clean transaction data.
-    Always reports how many rows were kept or removed.
+    Validate and clean the transaction DataFrame.
+    Converts 'date' and 'amount' to proper types,
+    drops rows with invalid or missing values, and
+    fills missing categories.
     """
-    missing = REQUIRED_COLUMNS - set(df.columns)
-    if missing:
-        raise ValueError(f"Missing columns: {missing}")
+    missing_cols = REQUIRED_COLUMNS - set(df.columns)
+    if missing_cols:
+        raise ValueError(f"Missing columns: {missing_cols}")
 
-    before_rows = len(df)
+    # Count rows before cleaning
+    initial_rows = len(df)
 
+    # Convert types (invalid parsing becomes NaN)
     df["date"] = pd.to_datetime(df["date"], errors="coerce")
     df["amount"] = pd.to_numeric(df["amount"], errors="coerce")
 
+    # Drop rows with invalid date or amount
     df = df.dropna(subset=["date", "amount"])
 
-    after_rows = len(df)
-    removed = before_rows - after_rows
+    # Count invalid rows removed
+    removed_rows = initial_rows - len(df)
 
-    print(
-        f"🧹 Preprocessing complete: "
-        f"{after_rows} valid row(s), "
-        f"{removed} invalid row(s) removed"
-    )
-
+    # Fill category if missing
     if "category" not in df.columns:
         df["category"] = "Uncategorized"
 
+    # Print preprocessing summary
+    print(f"🧹 Preprocessing complete: {len(df)} valid row(s), {removed_rows} invalid row(s) removed")
+
     return df
+
+
+
 

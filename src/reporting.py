@@ -1,20 +1,41 @@
-def generate_summary(total_spend: float, score: int) -> str:
+def generate_summary(
+    total_spend: float,
+    score: int,
+    alerts: list
+) -> str:
     """
-    Generate a formatted summary of spending efficiency.
-
-    Args:
-        total_spend (float): Total amount spent
-        score (int): Efficiency score (0–100)
-
-    Returns:
-        str: Summary text
+    Generate an executive summary including budget alerts.
     """
-    return (
-        f"\n📊 Expense Summary\n"
-        f"------------------\n"
-        f"Total Spend      : ${total_spend:,.2f}\n"
-        f"Efficiency Score : {score}/100\n"
-    )
+    summary_lines = [
+        "📊 Expense Summary",
+        "-" * 18,
+        f"Total Spend      : ${total_spend:,.2f}",
+        f"Efficiency Score : {score}/100",
+    ]
+
+    if alerts:
+        summary_lines.append("")
+        summary_lines.append("🚨 Budget Alerts Summary")
+        summary_lines.append(f"- {len(alerts)} category(ies) over budget")
+
+        # Count severities
+        high = sum("[HIGH]" in a for a in alerts)
+        medium = sum("[MEDIUM]" in a for a in alerts)
+        low = sum("[LOW]" in a for a in alerts)
+
+        if high:
+            summary_lines.append(f"  • HIGH severity   : {high}")
+        if medium:
+            summary_lines.append(f"  • MEDIUM severity : {medium}")
+        if low:
+            summary_lines.append(f"  • LOW severity    : {low}")
+    else:
+        summary_lines.append("")
+        summary_lines.append("✅ All categories are within budget")
+
+    return "\n".join(summary_lines)
+
+
 
 
 def print_rankings(ranked_costs):

@@ -65,7 +65,7 @@ def main():
     score = efficiency_score(total_spend, total_budget)
 
     # Reporting
-    print(generate_summary(total_spend, score))
+    print(generate_summary(total_spend, score, alerts))
     print_rankings(ranked_costs)
 
     # 🔹 STEP 7 — Audit Logging

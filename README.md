@@ -1,54 +1,54 @@
-**Expense_Tracker_Python_Project**
+# Expense_Tracker_Python_Project
 
-**Project Description**
+## Project Description
 
-The Expense_Tracker_Python_Project is a rules-based expense tracking and financial analysis system built in Python. It organizes income and expenses, enforces budget limits, identifies overspending patterns, and produces clear, audit-ready financial insights. The project is designed for trucking operations, small businesses, or personal finance use cases.
+The **Expense_Tracker_Python_Project** is a rules-based expense tracking and financial analysis system built in Python. It organizes income and expenses, enforces budget limits, identifies overspending patterns, and produces clear, audit-ready financial insights. The project is designed for trucking operations, small businesses, or personal finance use cases.
 
-This capstone intentionally combines finance and accounting concepts (budgeting, variance analysis, efficiency metrics) with data analytics and Python programming skills in a modular, explainable system.
+This capstone project intentionally combines finance and accounting concepts (budgeting, variance analysis, efficiency metrics) with data analytics and Python programming skills in a modular, explainable system.
 
-**Project Objectives**
+## Project Objectives
 
-- Track and categorize income and expenses
+- Track and categorize income and expenses  
+- Enforce budget limits using configurable rules  
+- Identify overspending and cost drivers  
+- Generate efficiency scores and rankings  
+- Produce executive summaries and audit logs  
+- Maintain transparency and explainability  
 
-- Enforce budget limits using configurable rules
-
-- Identify overspending and cost drivers
-
-- Generate efficiency scores and rankings
-
-- Produce executive summaries and audit logs
-
-- Maintain transparency and explainability
-
-**Project Approach**
+## Project Approach
 
 The project follows a phased, modular development approach. Core functionality is implemented first to ensure a working end-to-end pipeline, followed by scoring, reporting, auditability, testing, and documentation. Configuration files (CSV and YAML) are used to separate business rules from code, improving flexibility and maintainability.
 
-**Project Structure**
+## Project Structure
 
- Expense_Tracker_Python_Project/
+```text
+Expense_Tracker_Python_Project/
 ├── main.py
 ├── README.md
 ├── src/
-│ ├── init.py
-│ ├── ingest.py
-│ ├── preprocess.py
-│ ├── config_loader.py
-│ ├── categorize.py
-│ ├── rules_engine.py
-│ ├── analysis.py
-│ ├── scoring.py
-│ └── reporting.py
+│   ├── __init__.py
+│   ├── ingest.py
+│   ├── preprocess.py
+│   ├── config_loader.py
+│   ├── categorize.py
+│   ├── rules_engine.py
+│   ├── analysis.py
+│   ├── scoring.py
+│   ├── reporting.py
+│   ├── budget.py
+│   └── audit_logger.py
 ├── data/
-│ └── transactions.csv
+│   └── transactions.csv
 ├── config/
-│ ├── budgets.csv
-│ └── rules.yml
+│   ├── budgets.csv
+│   └── rules.yml
 └── output/
-├── reports/
-└── audit_logs/  
+    ├── reports/
+    └── audit_logs/
+        └── budget_alerts.csv
+```
 
-**Master Task List**
+## Master Task List
 
 **Phase 1: Planning & Setup**
 
@@ -130,53 +130,53 @@ The project follows a phased, modular development approach. Core functionality i
 
 - Prepare final report or presentation
 
-**Project Timeline (Estimated 40–60 Hours)**
+## Project Timeline (Estimated 40–60 Hours)
 
-Phase 1: Planning & Setup (4–6 hours)
+**Phase 1: Planning & Setup (4–6 hours)**
 - Review approved proposal
 - Define MVP scope
 - Set up project folder structure
 - Initialize Git repository
 
-Phase 2: Data Handling (8–10 hours)
+**Phase 2: Data Handling (8–10 hours)**
 - Define transaction data schema
 - Create sample transaction data
 - Write data ingestion module
 - Implement data validation and cleaning
 
-Phase 3: Rules & Categorization (8–10 hours)
+**Phase 3: Rules & Categorization (8–10 hours)**
 - Define expense categories
 - Build rule catalog (budget, trend, anomaly rules)
 - Implement auto-categorization logic
 - Add manual override functionality
 
-Phase 4: Financial Analysis (6–8 hours)
+**Phase 4: Financial Analysis (6–8 hours)**
 - Calculate totals and category spend
 - Compute variances vs budget
 - Implement cost-per-mile logic (optional)
 - Rank cost drivers
 
-Phase 5: Scoring System (4–6 hours)
+**Phase 5: Scoring System (4–6 hours)**
 - Design efficiency scoring formula
 - Implement scoring logic
 - Generate daily and monthly scores
 
-Phase 6: Reporting (5–7 hours)
+**Phase 6: Reporting (5–7 hours)**
 - Generate executive summary
 - Create category ranking tables
 - Build trend visualizations
 - Implement what-if analysis
 
-Phase 7: Audit & Logging (3–4 hours)
+**Phase 7: Audit & Logging (3–4 hours)**
 - Track which rules fired and why
 - Store audit logs for review
 
-Phase 8: Testing & Refinement (4–6 hours)
+**Phase 8: Testing & Refinement (4–6 hours)**
 - Test with multiple datasets
 - Debug edge cases
 - Refactor for clarity
 
-Phase 9: Documentation & Finalization (4–5 hours)
+**Phase 9: Documentation & Finalization (4–5 hours)**
 - Finalize README.md
 - Add usage instructions
 - Prepare project presentation/report

@@ -1,11 +1,13 @@
 from src.ingest import load_transactions
 from src.preprocess import validate_and_clean
 from src.categorize import auto_categorize
-from src.analysis import calculate_totals, calculate_variances, rank_cost_drivers
+from src.analysis import calculate_totals, rank_cost_drivers
+from src.budget import evaluate_variances, generate_budget_alerts, log_budget_alerts
 from src.scoring import efficiency_score
 from src.reporting import generate_summary, print_rankings
 from src.config_loader import load_budgets
 from src.audit_logger import log_run   # 🔹 STEP 7 import
+
 
 import os
 
@@ -32,7 +34,28 @@ def main():
     budgets = load_budgets()
 
     # Financial analysis
-    total_spend, category_totals = calculate_totals(df)
+    total_spend, category_totals = calculate_totals(df)# Calculate budget variances
+
+    variances = evaluate_variances(category_totals, budgets)
+    alerts = generate_budget_alerts(variances)
+
+    print("\n📉 Budget Variance Report")
+    print("------------------------")
+    for category, diff in variances.items():
+        status = "OVER budget" if diff > 0 else "UNDER budget"
+        print(f"{category:<15} ${diff:>8.2f} ({status})")
+
+    # Log alerts to audit file
+    log_budget_alerts(variances)
+
+    if alerts:
+        print("\n🚨 Budget Alerts")
+        print("----------------")
+        for alert in alerts:
+            print(alert)
+    else:
+        print("\n✅ No budget overruns detected")
+
     total_budget = sum(budgets.values())
     ranked_costs = rank_cost_drivers(category_totals)
 

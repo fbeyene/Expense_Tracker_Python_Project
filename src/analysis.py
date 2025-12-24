@@ -24,29 +24,6 @@ def calculate_totals(df: pd.DataFrame):
     return total_spend, category_totals
 
 
-def calculate_variances(category_totals: dict, budgets: dict):
-    """
-    Calculate variance between actual spending and budget.
-
-    Parameters
-    ----------
-    category_totals : dict
-        Actual spending per category.
-    budgets : dict
-        Budget per category.
-
-    Returns
-    -------
-    dict
-        Variance per category (actual - budget).
-    """
-    variances = {}
-    for category, actual in category_totals.items():
-        budget = budgets.get(category, 0)
-        variances[category] = actual - budget
-    return variances
-
-
 def rank_cost_drivers(category_totals: dict):
     """
     Rank categories by total spending.

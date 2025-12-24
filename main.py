@@ -19,7 +19,7 @@ def main():
           os.path.exists("data/transactions.csv"))
     # -----------------------------
     # Load and process transactions
-    df = load_transactions(r"C:\Users\fikad\Documents\Expense_Tracker_Python_Project\data\transactions.csv")
+    df = load_transactions("data/transactions.csv")
 
     print("DEBUG: Rows loaded =", len(df))
     print("DEBUG: Last 10 rows:")

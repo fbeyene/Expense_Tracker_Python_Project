@@ -21,7 +21,7 @@ def validate_and_clean(df):
     df["amount"] = pd.to_numeric(df["amount"], errors="coerce")
 
     # Drop rows with invalid date or amount
-    df = df.dropna(subset=["date", "amount"])
+    df = df.dropna(subset=["date", "amount"]).copy()
 
     # Count invalid rows removed
     removed_rows = initial_rows - len(df)

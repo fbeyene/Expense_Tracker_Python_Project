@@ -15,9 +15,133 @@ This capstone project intentionally combines finance and accounting concepts (bu
 - Produce executive summaries and audit logs  
 - Maintain transparency and explainability  
 
+
+## How to Run the Project
+
+### 1. Clone the Repository
+    ```bash
+    git clone https://github.com/fbeyene/Expense_Tracker_Python_Project.git
+    ```
+### 2. Navigate to the Project Directory
+    ```bash
+    cd Expense_Tracker_Python_Project
+    ```
+### 3. Install Dependencies:
+    ```bash
+    pip install pandas pyyaml matplotlib
+    ```
+### 4. Update Configuration Files
+- Modify files in the `config/` folder to adjust budgets or rules as needed.
+### 5. Run the Application:
+    ```bash
+    python main.py
+    ```
+
+## Usage
+After installing dependencies and running the application, the program executes a complete expense analysis workflow using the configured input files.
+
+### Running the Program
+
+    ```bash
+    python main.py
+    ```
+
+Once executed, the program automatically performs the following steps:
+
+### 1. Input Data
+
+The application reads data from the following files:
+- `data/transactions.csv'`
+    - Contains expense transactions
+    - Expected columns include:
+        - `date`
+        - `description`
+        - `amount`
+- `config/budgets.csv`
+    - Defines budget limits per category
+    - Used to calculate variances and trigger alerts
+- `config/rules.yml`
+    - Defines business rules such as:
+        - Overspending thresholds
+        - Category assignment logic 
+        - Anomaly detection rules
+
+Users can modify these files to test different scenarios without changing the code.
+
+### 2. Processing Flow
+
+When the program runs, it executes the following pipeline:
+
+**1. Data Ingestion**
+- Loads transaction data from CSV files
+- Validates required fields and formats
+
+**2. Preprocessing**
+- Loads transaction data from CSV files
+- Validates required fields and formats
+
+**3. Categorization**
+- Automatically assigns expense categories using rule-based logic
+- Applies manual overrides if provided
+
+**4. Rules Engine**
+- Evaluates spending against budgets
+- Identifies overspending and anomalies
+- Logs which rules were triggered and why
+
+**5. Financial Analysis**
+- Calculates totals and category-level spend
+- Computes budget variances
+- Ranks cost drivers
+
+**6. Scoring**
+- Generates efficiency scores based on spending behavior
+- Produces daily and/or monthly performance metrics
+
+### 3. Outputs
+
+After execution, results are written to the output/ directory:
+
+- `output/reports/`
+
+    - Executive summaries
+    - Category spending breakdowns
+    - Rankings and trend summaries
+
+- `output/audit_logs/`
+    - Rule execution logs
+    - Budget alerts (e.g., budget_alerts.csv)
+    - Audit-ready explanations of detected issues
+
+These outputs are designed to be easy to review, share, or audit.
+
+### 4. Interpreting Results
+
+- **Budget Alerts**
+    - Highlight categories that exceeded defined limits
+    - Include variance amounts and triggering rules
+
+- **Efficiency Scores**
+    - Higher scores indicate better budget discipline
+    - Useful for comparing periods or scenarios
+
+- **Reports**
+  - Summarize financial performance in a clear, explainable format
+  - Intended for decision-makers, not just technical users
+
+### 5. Example Workflow
+
+1. Update transactions.csv with new expense data
+2. Adjust budget thresholds in budgets.csv
+3. Modify rules in rules.yml (optional)
+4. Run the program
+5. Review generated reports and audit logs
+
 ## Project Approach
 
-The project follows a phased, modular development approach. Core functionality is implemented first to ensure a working end-to-end pipeline, followed by scoring, reporting, auditability, testing, and documentation. Configuration files (CSV and YAML) are used to separate business rules from code, improving flexibility and maintainability.
+The project follows a phased, modular development approach. Core functionality is implemented first to ensure a working end-to-end pipeline, followed by scoring, reporting, auditability, testing, and documentation. 
+
+Configuration files (CSV and YAML) are used to separate business rules from code, improving flexibility and maintainability.
 
 ## Project Structure
 
@@ -47,6 +171,21 @@ Expense_Tracker_Python_Project/
     └── audit_logs/
         └── budget_alerts.csv
 ```
+
+## Technologies Used
+
+- Python
+
+- pandas
+
+- PyYAML
+
+- matplotlib (optional for visualizations)
+
+- CSV and YAML
+
+- Git & GitHub
+
 
 ## Master Task List
 
@@ -184,7 +323,7 @@ Expense_Tracker_Python_Project/
 
 **Total Estimated Time: 40–60 hours**
 
-**Learning Objectives**
+## Learning Objectives
 
 - Apply data ingestion, validation, and preprocessing techniques
 
@@ -198,30 +337,7 @@ Expense_Tracker_Python_Project/
 
 - Practice auditability, testing, and documentation
 
-**Technologies Used**
 
-- Python
-
-- pandas
-
-- PyYAML
-
-- matplotlib (optional for visualizations)
-
-- CSV and YAML
-
-- Git & GitHub
-
-**How to Run the Project**
-
-1. Clone the repository
-
-2. Install dependencies:
-
-    pip install pandas pyyaml matplotlib
-
-3. Update configuration files in the config/ folder if needed
-
-4. Run the application:
-
-    python main.py
+## 📌 Author
+**Fikadu Beyene**  
+Data & Financial Systems Professional 

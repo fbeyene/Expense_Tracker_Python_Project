@@ -40,6 +40,27 @@ This capstone project intentionally combines finance and accounting concepts (bu
 ## Usage
 After installing dependencies and running the application, the program executes a complete expense analysis workflow using the configured input files.
 
+Then the system automatically:
+- Organizes spending by category
+- Enforces budget limits
+- Identifies overspending patterns
+- Produces audit-ready financial summaries
+
+### Budget Enforcement Example
+
+When spending exceeds configured budget limits, the program generates clear, human-readable alerts:
+
+```text
+🚨 Budget Alerts
+----------------
+⚠ Budget Alert:
+Category: Fuel
+Budget: $2,000.00
+Actual Spend: $2,515.00
+Over Budget Amount: $515.00
+```
+
+
 ### Running the Program
 
     ```bash
@@ -136,6 +157,9 @@ These outputs are designed to be easy to review, share, or audit.
 3. Modify rules in rules.yml (optional)
 4. Run the program
 5. Review generated reports and audit logs
+
+**Organizing Spending**  
+The program groups all transactions by category and ranks them by total spend, allowing users to quickly identify top cost drivers.
 
 ## Project Approach
 

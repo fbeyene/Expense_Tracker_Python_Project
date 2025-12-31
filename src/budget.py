@@ -1,6 +1,7 @@
 import csv
 import os
 from datetime import datetime
+from typing import Dict, List
 
 """
 budget.py
@@ -37,21 +38,36 @@ def evaluate_variances(
 def generate_budget_alerts(
     category_totals: Dict[str, float],
     budgets: Dict[str, float]
-) -> list:
+) -> List[str]:
     """
-    Generate budget alerts with severity levels.
+    Generate detailed budget alerts.
+
+    Variance is calculated as:
+        Actual Spend - Budget
+
+    Positive variance indicates overspending.
+    Negative variance indicates underspending.
     """
     alerts = []
 
     for category, actual in category_totals.items():
-        budget = budgets.get(category, 0)
-        diff = actual - budget
+        budget = budgets.get(category, 0.0)
 
-        if diff > 0:
-            severity = determine_severity(actual, budget)
-            alerts.append(
-                f"⚠ [{severity}] {category} over budget by ${diff:.2f}"
+        # Skip categories with no defined budget
+        if budget <= 0:
+            continue
+
+        variance = actual - budget
+
+        if variance > 0:
+            alert = (
+                "⚠ Budget Alert:\n"
+                f"Category: {category}\n"
+                f"Budget: ${budget:,.2f}\n"
+                f"Actual Spend: ${actual:,.2f}\n"
+                f"Over Budget Amount: ${variance:,.2f}"
             )
+            alerts.append(alert)
 
     return alerts
 

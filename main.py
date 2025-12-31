@@ -7,6 +7,7 @@ from src.scoring import efficiency_score
 from src.reporting import generate_summary, print_rankings
 from src.config_loader import load_budgets
 from src.audit_logger import log_run   # 🔹 STEP 7 import
+from src.anomalies import detect_spending_anomalies   # 🔹 NEW (Unusual patterns)
 
 
 import os
@@ -36,6 +37,16 @@ def main():
     # Financial analysis
     total_spend, category_totals = calculate_totals(df)# Calculate budget variances
 
+    # 🔹 STEP: Detect unusual spending patterns
+    anomalies = detect_spending_anomalies(
+        current_totals=category_totals,
+        historical_averages={
+            "Fuel": 1400,
+            "Maintenance": 570,
+            "Insurance": 560
+        }
+    )
+
     variances = evaluate_variances(category_totals, budgets)
     alerts = generate_budget_alerts(category_totals, budgets)
 
@@ -55,8 +66,16 @@ def main():
         print("----------------")
         for alert in alerts:
             print(alert)
+            print()  # blank line between alerts
     else:
         print("\n✅ No budget overruns detected")
+
+    if anomalies:
+        print("\n🚨 Unusual Spending Alerts")
+        print("--------------------------")
+        for alert in anomalies:
+            print(alert)
+            print()  # blank line for readability
 
     total_budget = sum(budgets.values())
     ranked_costs = rank_cost_drivers(category_totals)

@@ -45,6 +45,8 @@ def print_rankings(ranked_costs):
     Args:
         ranked_costs (list): List of (category, amount) tuples
     """
+    print("\n📊 Organized Spending Summary by Category (Top Cost Drivers):")
+    print("-------------------------------------------------------------")
     print("\n🔥 Top Cost Drivers")
     print("------------------")
 

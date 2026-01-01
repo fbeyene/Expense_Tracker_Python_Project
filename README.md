@@ -13,7 +13,8 @@ This capstone project intentionally combines finance and accounting concepts (bu
 - Identify overspending and cost drivers  
 - Generate efficiency scores and rankings  
 - Produce executive summaries and audit logs  
-- Maintain transparency and explainability  
+- Maintain transparency and explainability
+- Allow interactive modification of transactions (add, edit, delete)
 
 
 ## How to Run the Project
@@ -45,6 +46,65 @@ Then the system automatically:
 - Enforces budget limits
 - Identifies overspending patterns
 - Produces audit-ready financial summaries
+- Allows users to interactively add, edit, or delete transactions before analysis
+
+### Interactive Transaction Menu
+
+Once the program starts, users can interact with the expense data using a simple CLI menu:
+As a user, when you run the program, the interactive menu below will appear. Enter the number corresponding to the action you want to perform.
+
+```text 
+📋 Expense Tracker Menu 
+------------------------ 
+   1. Add Transaction 
+   2. Edit Transaction 
+   3. Delete Transaction 
+   4. Continue to Analysis 
+   5. Exit
+```
+
+**Add a Transaction**
+
+- Enter the Category, Date, and Amount
+- The Description will be auto-filled based on the category if left blank
+- Example:
+
+```text
+➕ Add a New Transaction
+Category: Fuel
+Date (YYYY-MM-DD): 2025-12-31
+Amount: 100.00
+Description (optional): <Press Enter>
+✅ Transaction added successfully
+```
+
+**Edit a Transaction**
+
+- Enter the row index of the transaction to edit
+- Update Category, Description, and Amount
+- Leaving the description blank will auto-fill with the default description for the category
+- Example:
+
+```text
+✏️ Edit Transaction
+Enter row index to edit: 17
+New Category (current: Other): Food
+New Description (leave blank to use default for Food): <Press Enter>
+New Amount: 25.00
+✅ Transaction updated successfully
+```
+
+**Delete a Transaction**
+
+- Enter the row index of the transaction to remove
+- Example:
+
+```text
+🗑 Delete Transaction
+Enter row index to delete: 3
+✅ Transaction deleted.
+```
+
 
 ### Budget Enforcement Example
 
@@ -60,6 +120,25 @@ Actual Spend: $2,515.00
 Over Budget Amount: $515.00
 ```
 
+### Unusual Spending Patterns
+
+The program highlights categories where spending is significantly higher than historical averages:
+
+```text
+🚨 Unusual Spending Detected:
+Category          : Maintenance
+Current Spend     : $800.00
+Historical Average: $570.00
+This month's spend is 40% higher than average.
+```
+
+### Feature Highlights
+
+- **Organized Spending**: Expenses are automatically categorized and summarized by type.
+- **Budget Enforcement**: Spending is compared against predefined budgets, with alerts generated for overruns.
+- **Anomaly Detection**: Rules identify unusual spending patterns based on thresholds and trends.
+- Interactive Editing: Users can add, edit, or delete expense entries before running analysis.
+- **Financial Insights**: The system produces summaries, rankings, and efficiency scores with explanatory context.
 
 ### Running the Program
 
@@ -78,6 +157,7 @@ The application reads data from the following files:
         - `date`
         - `description`
         - `amount`
+        - `category`
 - `config/budgets.csv`
     - Defines budget limits per category
     - Used to calculate variances and trigger alerts
@@ -98,26 +178,29 @@ When the program runs, it executes the following pipeline:
 - Validates required fields and formats
 
 **2. Preprocessing**
-- Loads transaction data from CSV files
-- Validates required fields and formats
+- Cleans and standardizes transaction data
 
 **3. Categorization**
 - Automatically assigns expense categories using rule-based logic
 - Applies manual overrides if provided
 
-**4. Rules Engine**
+**4. Interactive Editing**
+- Users can add, edit, or delete transactions
+- Default descriptions are auto-filled based on the category
+
+**5. Rules Engine**
 - Evaluates spending against budgets
 - Identifies overspending and anomalies
 - Logs which rules were triggered and why
 
-**5. Financial Analysis**
+**6. Financial Analysis**
 - Calculates totals and category-level spend
 - Computes budget variances
 - Ranks cost drivers
 
-**6. Scoring**
+**7. Scoring**
 - Generates efficiency scores based on spending behavior
-- Produces daily and/or monthly performance metrics
+- Provides brief explanations for the score
 
 ### 3. Outputs
 
@@ -138,25 +221,20 @@ These outputs are designed to be easy to review, share, or audit.
 
 ### 4. Interpreting Results
 
-- **Budget Alerts**
-    - Highlight categories that exceeded defined limits
-    - Include variance amounts and triggering rules
-
-- **Efficiency Scores**
-    - Higher scores indicate better budget discipline
-    - Useful for comparing periods or scenarios
-
-- **Reports**
-  - Summarize financial performance in a clear, explainable format
-  - Intended for decision-makers, not just technical users
+- **Budget Alerts**: Highlight categories that exceeded defined limits 
+- **Efficiency Scores**: Higher scores indicate better budget discipline
+- **Unusual Spending Alerts**: Flag categories with significantly higher spend than historical averages    
+- **Reports**: Summarize financial performance in a clear, explainable format
+  
 
 ### 5. Example Workflow
 
-1. Update transactions.csv with new expense data
-2. Adjust budget thresholds in budgets.csv
-3. Modify rules in rules.yml (optional)
-4. Run the program
-5. Review generated reports and audit logs
+1. Add, edit, or delete transactions interactively
+2. Update transactions.csv with new expense data
+3. Adjust budget thresholds in budgets.csv
+4. Modify rules in rules.yml (optional)
+5. Run the program
+6. Review generated reports and audit logs
 
 **Organizing Spending**  
 The program groups all transactions by category and ranks them by total spend, allowing users to quickly identify top cost drivers.
@@ -184,7 +262,9 @@ Expense_Tracker_Python_Project/
 │   ├── scoring.py
 │   ├── reporting.py
 │   ├── budget.py
-│   └── audit_logger.py
+│   ├── anomalies.py
+│   ├── audit_logger.py
+│   └── interactive.py        # 🔹 NEW: CLI-based interactive feature
 ├── data/
 │   └── transactions.csv
 ├── config/
@@ -199,15 +279,10 @@ Expense_Tracker_Python_Project/
 ## Technologies Used
 
 - Python
-
 - pandas
-
 - PyYAML
-
 - matplotlib (optional for visualizations)
-
 - CSV and YAML
-
 - Git & GitHub
 
 
@@ -216,81 +291,63 @@ Expense_Tracker_Python_Project/
 **Phase 1: Planning & Setup**
 
 - Review approved proposal
-
 - Define MVP scope
-
 - Set up project structure
-
 - Initialize Git repository
 
 **Phase 2: Data Handling**
 
 - Define transaction schema
-
 - Create sample CSV data
-
 - Ingest data
-
 - Validate and clean records
 
 **Phase 3: Rules & Categorization**
 
 - Define expense categories
-
 - Build rule catalog
-
 - Implement auto-categorization
-
 - Add manual overrides
 
 **Phase 4: Financial Analysis**
 
 - Calculate totals and category spend
-
 - Compute budget variances
-
 - Rank cost drivers
-
 - Optional cost-per-mile logic
 
 **Phase 5: Scoring System**
 
 - Design efficiency scoring
-
 - Implement scoring logic
-
 - Generate daily/monthly scores
 
 **Phase 6: Reporting**
 
 - Generate executive summaries
-
 - Create ranking tables
-
 - Build trend visualizations
-
 - Implement what-if analysis
 
 **Phase 7: Audit & Logging**
 
 - Track fired rules
-
 - Store audit logs
 
-**Phase 8: Testing & Refinement**
+**Phase 8: Interactive CLI**
+
+- Add, edit, delete transactions interactively before analysis
+
+**Phase 9: Testing & Refinement**
 
 - Test multiple datasets
-
 - Debug edge cases
-
 - Refactor code
 
-**Phase 9: Documentation & Finalization**
+**Phase 10: Documentation & Finalization**
 
 - Finalize README
-
 - Add usage instructions
-
 - Prepare final report or presentation
 
 ## Project Timeline (Estimated 40–60 Hours)
@@ -334,12 +391,16 @@ Expense_Tracker_Python_Project/
 - Track which rules fired and why
 - Store audit logs for review
 
-**Phase 8: Testing & Refinement (4–6 hours)**
+**Phase 8: Interactive CLI (3–4 hours)**
+- Test interactive menu for adding, editing, deleting transactions
+- Ensure workflow does not break existing analysis
+
+**Phase 9: Testing & Refinement (4–6 hours)**
 - Test with multiple datasets
 - Debug edge cases
 - Refactor for clarity
 
-**Phase 9: Documentation & Finalization (4–5 hours)**
+**Phase 10: Documentation & Finalization (4–5 hours)**
 - Finalize README.md
 - Add usage instructions
 - Prepare project presentation/report
@@ -350,15 +411,10 @@ Expense_Tracker_Python_Project/
 ## Learning Objectives
 
 - Apply data ingestion, validation, and preprocessing techniques
-
 - Design and implement rule-based analytics systems
-
 - Perform financial analysis and variance calculations
-
 - Translate metrics into efficiency scores and KPIs
-
 - Communicate insights through reports and summaries
-
 - Practice auditability, testing, and documentation
 
 

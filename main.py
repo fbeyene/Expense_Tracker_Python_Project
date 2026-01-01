@@ -9,6 +9,14 @@ from src.config_loader import load_budgets
 from src.audit_logger import log_run   # 🔹 STEP 7 import
 from src.anomalies import detect_spending_anomalies   # 🔹 NEW (Unusual patterns)
 
+# 🔹 NEW (Interactive CLI features)
+from src.interactive import (
+    show_menu,
+    add_transaction,
+    edit_transaction,
+    delete_transaction
+)
+
 
 import os
 
@@ -30,6 +38,26 @@ def main():
 
     df = validate_and_clean(df)
     df = auto_categorize(df)
+
+    # =============================
+    # 🔹 INTERACTIVE TRANSACTION MENU
+    # =============================
+    while True:
+        choice = show_menu()
+
+        if choice == "1":
+            df = add_transaction(df)
+        elif choice == "2":
+            df = edit_transaction(df)
+        elif choice == "3":
+            df = delete_transaction(df)
+        elif choice == "4":
+            print("Proceeding to analysis...\n")
+            break
+        else:
+            print("Invalid selection. Please try again.")
+
+
 
     # Load budgets
     budgets = load_budgets()
@@ -81,7 +109,16 @@ def main():
     ranked_costs = rank_cost_drivers(category_totals)
 
     # Scoring
-    score = efficiency_score(total_spend, total_budget)
+    score, score_reason = efficiency_score(
+        total_spend=total_spend,
+        total_budget=total_budget,
+        category_variances=variances
+    )
+
+    print("\n📊 Efficiency Score")
+    print("-------------------")
+    print(f"Overall Efficiency Score: {score}/100")
+    print(f"Reason: {score_reason}")
 
     # Reporting
     print(generate_summary(total_spend, score, alerts))

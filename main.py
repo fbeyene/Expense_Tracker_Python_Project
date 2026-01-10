@@ -8,6 +8,8 @@ from src.reporting import generate_summary, print_rankings
 from src.config_loader import load_budgets
 from src.audit_logger import log_run   # 🔹 STEP 7 import
 from src.anomalies import detect_spending_anomalies   # 🔹 NEW (Unusual patterns)
+from src.storage import save_transactions
+
 
 # 🔹 NEW (Interactive CLI features)
 from src.interactive import (
@@ -47,15 +49,26 @@ def main():
 
         if choice == "1":
             df = add_transaction(df)
+            save_transactions(df)
+
         elif choice == "2":
             df = edit_transaction(df)
+            save_transactions(df)
+
         elif choice == "3":
             df = delete_transaction(df)
+            save_transactions(df)
+
         elif choice == "4":
             print("Proceeding to analysis...\n")
-            break
+            break  # exits menu loop, continues program
+
+        elif choice == "5":
+            print("👋 Exiting Expense Tracker. Goodbye!")
+            return  # exits main() entirely
+
         else:
-            print("Invalid selection. Please try again.")
+            print("❌ Invalid selection. Please choose 1–5.")
 
 
 
